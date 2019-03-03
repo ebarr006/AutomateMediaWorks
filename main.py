@@ -97,11 +97,11 @@ class Webpage:
             self.sendValuetoXpath('//*[@id="firstDate"]', data[10])
             self.sendValuetoXpath('//*[@id="untilEndDate"]', data[10])
 
-            # request items
+            # # request items
             self.clickPath('//*[@id="p_action_save"]')
             ti.sleep(t)
 
-            submit
+            #submit
             page.clickPath('//*[@id="p_action_submit"]')
             ti.sleep(1)
             page.driver.switch_to_alert().accept()
