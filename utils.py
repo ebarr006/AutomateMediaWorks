@@ -1,7 +1,22 @@
 import xlrd
+import json
 import time as ti
 import getpass as getpass
 from datetime import time
+
+Abbrev = {
+    "BRNHL" : "Bourns Hall",
+    "CHUNG" : "Winston Chung Hall",
+    "HMNSS" : "Humanities Socsci",
+    "INTN"  : "CHASS Int North",
+    "INTS"  : "CHASS Int South",
+    "MSE"   : "Materials Science & Engineering",
+    "OLMH"  : "Olmsted Hall",
+    "SKYE"  : "Skye",
+    "SPR"   : "Sproul Hall",
+    "UNLH"  : "UNIV Lec Hall",
+    "WAT"   : "Watkins Hall"
+}
 
 def floatToTime(x):
     x = int(x * 24 * 3600)
@@ -62,10 +77,40 @@ def getRooms(filename):
     buildings = []
     floors = []
     rooms = []
-    wb = xlrd.open_workbook(filename)
+
+    wb = xlrd.open_workbook("test.xlsx")
     locations = wb.sheet_by_index(2)
+
     for x in range(1, locations.nrows):
-        buildings.append(locations.cell(x, 0).value)
-        floors.append(locations.cell(x, 1).value)
-        rooms.append(int(locations.cell(x,2).value))
+        spot = locations.cell(x,0).value.split(" ")
+        buildings.append(Abbrev[spot[0]])
+        roomNumber = spot[1].rstrip()
+        first = roomNumber[0]
+        if first.isalpha():
+            first = roomNumber[1]
+            # print "length: " + str(len(roomNumber[1:]))
+            if len(roomNumber[1:]) == 3:
+                rooms.append(roomNumber[0:1] + '0' + roomNumber[1:])
+                # first = roomNumber[2]
+
+        else:
+            first = roomNumber[0]
+            if len(roomNumber) == 3:
+                rooms.append("0" + roomNumber)
+            else:
+                rooms.append(roomNumber)
+
+        if first == '0':
+            floors.append("Lower Level")
+        elif first == '1':
+            floors.append("First Floor")
+        elif first == '2':
+            floors.append("Second Floor")
+        elif first == '3':
+            floors.append("Third Floor")
+        elif first == '4':
+            floors.append("Fourth Floor")
+
+        print buildings[x-1] + " " + floors[x-1] + " " + rooms[x-1]
+
     return (buildings, floors, rooms)

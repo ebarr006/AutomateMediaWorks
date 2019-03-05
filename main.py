@@ -101,12 +101,12 @@ class Webpage:
             self.clickPath('//*[@id="p_action_save"]')
             ti.sleep(t)
 
-            #submit
+            # #submit
             page.clickPath('//*[@id="p_action_submit"]')
-            ti.sleep(1)
+            ti.sleep(2)
             page.driver.switch_to_alert().accept()
             print("[ Order Submitted ]")
-            ti.sleep(1)
+            ti.sleep(2)
             page.driver.switch_to_alert().accept()
 
 
