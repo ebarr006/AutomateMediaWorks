@@ -78,7 +78,7 @@ def getRooms(filename):
     floors = []
     rooms = []
 
-    wb = xlrd.open_workbook("test.xlsx")
+    wb = xlrd.open_workbook(filename)
     locations = wb.sheet_by_index(2)
 
     for x in range(1, locations.nrows):
