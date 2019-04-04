@@ -21,8 +21,6 @@ class Webpage:
 
     def sendValuetoXpath(self, xpath, val):
         elem = self.driver.find_element_by_xpath(xpath)
-        elem.click()
-        elem.clear()
         elem.send_keys(val)
 
     def sendEnter(self, xpath):
@@ -83,6 +81,7 @@ class Webpage:
             # Equipment
             x = 1
             for i in equipment:
+                print i
                 # click plus button
                 self.clickPath('//*[@id="btn_addEquipment"]')
                 # click dropdown arrow
